@@ -49,7 +49,7 @@ namespace Medivis.Network
         }
 
         [Server]
-        public void OnStartGame(List<NetworkPlayer> aStartingPlayers)
+        public void OnStartGame(List<BaseNetworkPlayer> aStartingPlayers)
         {
             players = aStartingPlayers.Select(p => p as NetworkPlayer).ToList();
 
@@ -96,25 +96,6 @@ namespace Medivis.Network
 
         }
 
-        [Client]
-        private void OnDataComepletelyReceived(int transmissionId, byte[] data)
-        {
-            CaptainsMessNetworkManager networkManager = NetworkManager.singleton as CaptainsMessNetworkManager;
-            ExamplePlayerScript p = networkManager.localPlayer as ExamplePlayerScript;
-
-            if (p != null)
-            {
-                //deserialize data and relocalize
-                StartCoroutine(p.RelocateDevice(data));
-            }
-        }
-
-        //on clients this will be called every time a chunk (fragment of complete data) has been received
-        [Client]
-        private void OnDataFragmentReceived(int transmissionId, byte[] data)
-        {
-            //update a progress bar or do something else with the information
-        }
 
 
         public void OnJoinedLobby()
@@ -141,7 +122,7 @@ namespace Medivis.Network
         IEnumerator RunGame()
         {
             // Reset game
-            foreach (ExamplePlayerScript p in players)
+            foreach (NetworkPlayer p in players)
             {
                 p.totalPoints = 0;
             }
@@ -156,7 +137,7 @@ namespace Medivis.Network
             while (MaxScore() < 3)
             {
                 // Reset rolls
-                foreach (ExamplePlayerScript p in players)
+                foreach (NetworkPlayer p in players)
                 {
                     p.rollResult = 0;
                 }
@@ -172,7 +153,7 @@ namespace Medivis.Network
                 // Award point to winner
                 gameState = GameState.Scoring;
 
-                List<ExamplePlayerScript> scoringPlayers = PlayersWithHighestRoll();
+                List<NetworkPlayer> scoringPlayers = PlayersWithHighestRoll();
                 if (scoringPlayers.Count == 1)
                 {
                     scoringPlayers[0].totalPoints += 1;

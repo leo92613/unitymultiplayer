@@ -34,7 +34,7 @@ namespace Medivis.Network
         {
             // Create game session
             // Spawn the game session when a new client is connected to the server
-            ExampleGameSession oldSession = FindObjectOfType<ExampleGameSession>();
+            NetworkSession oldSession = FindObjectOfType<NetworkSession>();
             if (oldSession == null)
             {
                 GameObject serverSession = Instantiate(gameSessionPrefab);
@@ -50,7 +50,7 @@ namespace Medivis.Network
         {
             networkState = NetworkState.Connected;
 
-            gameSession = FindObjectOfType<ExampleGameSession>();
+            gameSession = FindObjectOfType<NetworkSession>();
             if (gameSession)
             {
                 gameSession.OnJoinedLobby();

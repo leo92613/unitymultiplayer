@@ -11,16 +11,16 @@ namespace Medivis.Network
         public int maxPlayers = 4;
         public NetworkPlayer playerPrefab;
         public float countdownDuration = 3; // Wait for this many seconds after people are ready before starting the game
-        public CaptainsMessListener listener;
+        public ConnectionHandler handler;
         public bool verboseLogging = false;
         public bool useDebugGUI = true;
         public bool forceServer = false;
-        private CaptainsMessNetworkManager networkManager;
+        private MedivisNetworkManager networkManager;
         public void Awake()
         {
             ValidateConfig();
             // Create network manager
-            networkManager = (Instantiate(Resources.Load("CaptainsMessNetworkManager")) as GameObject).GetComponent<CaptainsMessNetworkManager>();
+            networkManager = (Instantiate(Resources.Load("CaptainsMessNetworkManager")) as GameObject).GetComponent<MedivisNetworkManager>();
             if (networkManager != null)
             {
                 //networkManager.logLevel = 0;
@@ -36,13 +36,8 @@ namespace Medivis.Network
                 networkManager.offlineScene = "";
                 networkManager.onlineScene = "";
                 networkManager.playerPrefab = playerPrefab.gameObject;
-                networkManager.listener = listener;
+                networkManager.handler = handler;
                 networkManager.verboseLogging = verboseLogging;
-                // Optionally create Debug GUI
-                if (useDebugGUI)
-                {
-                    networkManager.GetComponent<CaptainsMessDebugGUI>().enabled = true;
-                }
             }
             else
             {
@@ -59,7 +54,7 @@ namespace Medivis.Network
             {
                 Debug.LogError("#CaptainsMess# Please pick a Player prefab", this);
             }
-            if (listener == null)
+            if (handler == null)
             {
                 Debug.LogError("#CaptainsMess# Please set a Listener object", this);
             }
@@ -68,21 +63,21 @@ namespace Medivis.Network
         {
             if (networkManager == null)
             {
-                networkManager = FindObjectOfType(typeof(CaptainsMessNetworkManager)) as CaptainsMessNetworkManager;
-                networkManager.listener = listener;
+                networkManager = FindObjectOfType(typeof(MedivisNetworkManager)) as MedivisNetworkManager;
+                networkManager.handler = handler;
                 if (networkManager.verboseLogging)
                 {
                     Debug.Log("#CaptainsMess# !! RECONNECTING !!");
                 }
             }
         }
-        public List<NetworkPlayer> Players()
+        public List<BaseNetworkPlayer> Players()
         {
-            return networkManager.LobbyPlayers();
+            return networkManager.LobbyPlayers() as List<BaseNetworkPlayer>;
         }
         public NetworkPlayer LocalPlayer()
         {
-            return networkManager.localPlayer;
+            return networkManager.localPlayer as NetworkPlayer;
         }
         public void AutoConnect()
         {
