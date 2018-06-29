@@ -10,17 +10,18 @@ namespace Medivis.Network
         public int minPlayers = 2;
         public int maxPlayers = 4;
         public NetworkPlayer playerPrefab;
+        public GameObject networkManagerPrefab;
         public float countdownDuration = 3; // Wait for this many seconds after people are ready before starting the game
         public ConnectionHandler handler;
         public bool verboseLogging = false;
-        public bool useDebugGUI = true;
+        //public bool useDebugGUI = true;
         public bool forceServer = false;
         private MedivisNetworkManager networkManager;
         public void Awake()
         {
             ValidateConfig();
             // Create network manager
-            networkManager = (Instantiate(Resources.Load("CaptainsMessNetworkManager")) as GameObject).GetComponent<MedivisNetworkManager>();
+            networkManager = (Instantiate(networkManagerPrefab) as GameObject).GetComponent<MedivisNetworkManager>();
             if (networkManager != null)
             {
                 //networkManager.logLevel = 0;
@@ -85,6 +86,7 @@ namespace Medivis.Network
             networkManager.minPlayers = minPlayers;
             networkManager.AutoConnect();
         }
+        [ContextMenu("Start Host")]
         public void StartHosting()
         {
             networkManager.InitNetworkTransport();

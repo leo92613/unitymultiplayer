@@ -11,8 +11,8 @@ namespace Medivis.Network
 {
     public class NetworkSession : NetworkBehaviour
     {
-        public Text gameStateField;
-        public Text gameRulesField;
+        //public Text gameStateField;
+        //public Text gameRulesField;
 
         public static NetworkSession instance;
 
@@ -30,15 +30,15 @@ namespace Medivis.Network
 
         public void OnDestroy()
         {
-            if (gameStateField != null)
-            {
-                gameStateField.text = "";
-                gameStateField.gameObject.SetActive(false);
-            }
-            if (gameRulesField != null)
-            {
-                gameRulesField.gameObject.SetActive(false);
-            }
+            //if (gameStateField != null)
+            //{
+            //    gameStateField.text = "";
+            //    gameStateField.gameObject.SetActive(false);
+            //}
+            //if (gameRulesField != null)
+            //{
+            //    gameRulesField.gameObject.SetActive(false);
+            //}
         }
 
         [Server]
@@ -95,8 +95,6 @@ namespace Medivis.Network
             //StartCoroutine(_networkTransmitter.SendBytesToClientsRoutine(0, arWorldMap.SerializeToByteArray()));
 
         }
-
-
 
         public void OnJoinedLobby()
         {
@@ -217,30 +215,30 @@ namespace Medivis.Network
 
         void Update()
         {
-            if (isServer)
-            {
-                if (gameState == GameState.Countdown)
-                {
-                    message = "Game Starting in " + Mathf.Ceil(networkHandler.center .CountdownTimer()) + "...";
-                }
-                else if (specialMessage != "")
-                {
-                    message = specialMessage;
-                }
-                else
-                {
-                    if (gameState == GameState.WaitingForRolls)
-                    {
-                        message = "";
-                    }
-                    else
-                    {
-                        message = gameState.ToString();
-                    }
-                }
-            }
+            //if (isServer)
+            //{
+            //    if (gameState == GameState.Countdown)
+            //    {
+            //        message = "Game Starting in " + Mathf.Ceil(networkHandler.center .CountdownTimer()) + "...";
+            //    }
+            //    else if (specialMessage != "")
+            //    {
+            //        message = specialMessage;
+            //    }
+            //    else
+            //    {
+            //        if (gameState == GameState.WaitingForRolls)
+            //        {
+            //            message = "";
+            //        }
+            //        else
+            //        {
+            //            message = gameState.ToString();
+            //        }
+            //    }
+            //}
 
-            gameStateField.text = message;
+            //gameStateField.text = message;
         }
 
         // Client RPCs
@@ -253,7 +251,7 @@ namespace Medivis.Network
         [ClientRpc]
         public void RpcOnAbortedGame()
         {
-            gameRulesField.gameObject.SetActive(false);
+            //gameRulesField.gameObject.SetActive(false);
         }
 
         [ClientRpc]

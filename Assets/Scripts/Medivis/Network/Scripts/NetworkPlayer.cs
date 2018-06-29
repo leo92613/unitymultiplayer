@@ -14,11 +14,11 @@ namespace Medivis.Network
 
     public class NetworkPlayer : BaseNetworkPlayer
     {
-        public Image image;
-        public Text nameField;
-        public Text readyField;
-        public Text rollResultField;
-        public Text totalPointsField;
+        //public Image image;
+        //public Text nameField;
+        //public Text readyField;
+        //public Text rollResultField;
+        //public Text totalPointsField;
 
         [SyncVar]
         public Color myColour;
@@ -104,28 +104,28 @@ namespace Medivis.Network
 
         public override void OnClientReady(bool readyState)
         {
-            if (readyState)
-            {
-                readyField.text = "READY!";
-                readyField.color = Color.green;
-            }
-            else
-            {
-                readyField.text = "not ready";
-                readyField.color = Color.red;
-            }
+            //if (readyState)
+            //{
+            //    readyField.text = "READY!";
+            //    readyField.color = Color.green;
+            //}
+            //else
+            //{
+            //    readyField.text = "not ready";
+            //    readyField.color = Color.red;
+            //}
         }
 
         void ShowPlayer()
         {
-            transform.SetParent(GameObject.Find("Canvas/PlayerContainer").transform, false);
+            //transform.SetParent(GameObject.Find("Canvas/PlayerContainer").transform, false);
 
-            image.color = myColour;
-            nameField.text = deviceName;
-            readyField.gameObject.SetActive(true);
+            //image.color = myColour;
+            //nameField.text = deviceName;
+            //readyField.gameObject.SetActive(true);
 
-            rollResultField.gameObject.SetActive(false);
-            totalPointsField.gameObject.SetActive(false);
+            //rollResultField.gameObject.SetActive(false);
+            //totalPointsField.gameObject.SetActive(false);
 
             OnClientReady(IsReady());
         }
@@ -133,15 +133,15 @@ namespace Medivis.Network
         public void Update()
         {
             string synced = locationSynced ? "SYNC" : "NO";
-            totalPointsField.text = "Points: " + totalPoints.ToString() + synced;
-            if (rollResult > 0)
-            {
-                rollResultField.text = "Roll: " + rollResult.ToString();
-            }
-            else
-            {
-                rollResultField.text = "";
-            }
+            //totalPointsField.text = "Points: " + totalPoints.ToString() + synced;
+            //if (rollResult > 0)
+            //{
+            //    rollResultField.text = "Roll: " + rollResult.ToString();
+            //}
+            //else
+            //{
+            //    rollResultField.text = "";
+            //}
             if (isLocalPlayer)
                 position = this.transform.position;
         }
@@ -156,10 +156,10 @@ namespace Medivis.Network
         [ClientRpc]
         public void RpcOnStartedGame()
         {
-            readyField.gameObject.SetActive(false);
+            //readyField.gameObject.SetActive(false);
 
-            rollResultField.gameObject.SetActive(true);
-            totalPointsField.gameObject.SetActive(true);
+            //rollResultField.gameObject.SetActive(true);
+            //totalPointsField.gameObject.SetActive(true);
         }
 
         //void OnGUI()
