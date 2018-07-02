@@ -246,6 +246,7 @@ namespace Medivis.Network {
                 }
             }
             Debug.Log("Discovered server: " + discoveryClient.discoveredServers.Count());
+            Debug.Log("This client should joint : " + shouldJoin);
             if (shouldJoin)
             {
                 if (verboseLogging)
@@ -260,7 +261,7 @@ namespace Medivis.Network {
                 {
                     if (discoveryClient.autoJoin)
                     {
-                        Debug.Log(aServer.Name);
+                        Debug.Log("joining "+aServer.Name);
                         JoinServer(aServer.ipAddress, networkPort);
                     }
                     else
