@@ -153,6 +153,7 @@ namespace Medivis.Network
 
         public override void OnStopClient()
         {
+            Debug.Log("Stop being a client");
             CallOnClientExitLobby();
         }
 
