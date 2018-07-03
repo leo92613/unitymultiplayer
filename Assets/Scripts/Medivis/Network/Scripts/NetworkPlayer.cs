@@ -109,6 +109,10 @@ namespace Medivis.Network
 
         public void OnSyncPosChanged()
         {
+            if(isLocalPlayer)
+            {
+                return;
+            }
             transform.localPosition = SyncPos;
         }
 
@@ -163,6 +167,11 @@ namespace Medivis.Network
             //}
             if (isLocalPlayer)
             {
+                if (isServer)
+                {
+                    SyncPos = transform.localPosition;
+                    return;
+                }
                 CmdSyncPos(transform.localPosition);
             }
         }
