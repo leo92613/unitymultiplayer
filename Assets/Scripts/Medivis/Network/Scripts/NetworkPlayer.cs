@@ -65,7 +65,12 @@ namespace Medivis.Network
             locationSynced = true;
         }
 
-
+        [Command]
+        public void CmdSetLocation(Vector3 SyncPos)
+        {
+            if (!isLocalPlayer)
+                position = SyncPos;
+        }
         [Command]
         public void CmdSetCustomPlayerInfo(Color aColour)
         {
