@@ -34,8 +34,6 @@ namespace Medivis.Network
         [SyncVar]
         public bool locationSynced;
 
-        [SyncVar(hook = "OnChangePosition")]
-        public Vector3 position;
         public GameObject spherePrefab;
 
         private byte[] savedBytes;
@@ -65,12 +63,7 @@ namespace Medivis.Network
             locationSynced = true;
         }
 
-        [Command]
-        public void CmdSetLocation(Vector3 SyncPos)
-        {
-            if (!isLocalPlayer)
-                position = SyncPos;
-        }
+
         [Command]
         public void CmdSetCustomPlayerInfo(Color aColour)
         {
@@ -107,13 +100,6 @@ namespace Medivis.Network
             Invoke("ShowPlayer", 0.5f);
         }
 
-        public void OnChangePosition(Vector3 syncPos)
-        {
-            if (isLocalPlayer)
-                return;
-            Debug.Log(deviceName + " is Moving!");
-            transform.position = position;
-        }
 
         public override void OnClientReady(bool readyState)
         {
@@ -158,10 +144,6 @@ namespace Medivis.Network
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log(deviceName + " is a local player? " + isLocalPlayer);
-            }
-            if (isLocalPlayer)
-            {
-                CmdSetLocation( this.transform.position);
             }
         }
 
