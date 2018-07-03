@@ -107,13 +107,15 @@ namespace Medivis.Network
 
         }
 
-        public void OnSyncPosChanged()
+        public void OnSyncPosChanged(Vector3 pos)
         {
+
+            Debug.Log(deviceName);
             if (isLocalPlayer)
             {
                 return;
             }
-            transform.localPosition = SyncPos;
+            transform.localPosition = pos;
         }
 
         public override void OnClientEnterLobby()
