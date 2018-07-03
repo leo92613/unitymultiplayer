@@ -45,7 +45,6 @@ namespace Medivis.Network
         {
             networkManager = NetworkManager.singleton as MedivisNetworkManager;
             networkManager.localPlayer = this;
-            this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
 #if UNITY_ANDROID
 			deviceName = SystemInfo.deviceModel;
 #else
