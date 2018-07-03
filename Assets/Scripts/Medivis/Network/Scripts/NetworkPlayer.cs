@@ -103,7 +103,7 @@ namespace Medivis.Network
 
         }
 
-        public voic OnSyncPosChanged()
+        public void OnSyncPosChanged()
         {
             transform.localPosition = SyncPos;
         }
