@@ -34,7 +34,7 @@ namespace Medivis.Network
         [SyncVar]
         public bool locationSynced;
 
-        [SyncVar]
+        [SyncVar(hook = "OnChangePosition")]
         public Vector3 position;
         public GameObject spherePrefab;
 
@@ -100,6 +100,11 @@ namespace Medivis.Network
 
             // Brief delay to let SyncVars propagate
             Invoke("ShowPlayer", 0.5f);
+        }
+
+        public void OnChangePosition(Vector3 syncPos)
+        {
+            transform.position = syncPos;
         }
 
         public override void OnClientReady(bool readyState)
