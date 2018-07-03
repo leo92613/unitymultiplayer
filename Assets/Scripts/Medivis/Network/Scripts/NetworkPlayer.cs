@@ -104,7 +104,8 @@ namespace Medivis.Network
 
         public void OnChangePosition(Vector3 syncPos)
         {
-            transform.position = syncPos;
+            Debug.Log(deviceName + " is Moving!");
+            transform.position = position;
         }
 
         public override void OnClientReady(bool readyState)
@@ -147,6 +148,10 @@ namespace Medivis.Network
             //{
             //    rollResultField.text = "";
             //}
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log(deviceName + " is a local player? " + isLocalPlayer);
+            }
             if (isLocalPlayer)
                 position = this.transform.position;
         }

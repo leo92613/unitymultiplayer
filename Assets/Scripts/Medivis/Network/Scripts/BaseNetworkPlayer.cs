@@ -24,7 +24,7 @@ namespace Medivis.Network
         [SyncVar]
         public byte slot;
 
-
+        public bool isLocal;
         protected MedivisNetworkManager networkManager;
 
         public override void OnStartClient()
@@ -63,7 +63,7 @@ namespace Medivis.Network
             // processorFrequency = SystemInfo.processorFrequency;
             // operatingSystem = SystemInfo.operatingSystem;
             // Debug.Log(String.Format("Device specs: {0}, {1}, {2} proc, {3} mem", deviceModel, operatingSystem, processorFrequency, memory));
-
+            Debug.Log("Client add a local player! " + this.deviceName);
             CmdSetBasePlayerInfo(version, deviceName, deviceId, peerId, playerIndex);
         }
 
