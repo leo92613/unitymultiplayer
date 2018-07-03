@@ -160,7 +160,9 @@ namespace Medivis.Network
                 Debug.Log(deviceName + " is a local player? " + isLocalPlayer);
             }
             if (isLocalPlayer)
-                position = this.transform.position;
+            {
+                CmdSetLocation( this.transform.position);
+            }
         }
 
         [ClientRpc]
