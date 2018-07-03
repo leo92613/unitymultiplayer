@@ -100,6 +100,10 @@ namespace Medivis.Network
                 return;
             }
             SyncPos = pos;
+            if (isServer)
+            {
+                transform.localPosition = pos;
+            }
 
         }
 
