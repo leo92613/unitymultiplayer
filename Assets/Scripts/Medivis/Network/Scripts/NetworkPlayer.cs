@@ -104,6 +104,8 @@ namespace Medivis.Network
 
         public void OnChangePosition(Vector3 syncPos)
         {
+            if (isLocalPlayer)
+                return;
             Debug.Log(deviceName + " is Moving!");
             transform.position = position;
         }
