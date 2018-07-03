@@ -33,7 +33,7 @@ namespace Medivis.Network
 
         [SyncVar]
         public bool locationSynced;
-        [SyncVar]
+        [SyncVar(hook= "OnSyncPosChanged")]
         public Vector3 SyncPos;
         public GameObject spherePrefab;
 
@@ -109,7 +109,7 @@ namespace Medivis.Network
 
         public void OnSyncPosChanged()
         {
-            if(isLocalPlayer)
+            if (isLocalPlayer)
             {
                 return;
             }
