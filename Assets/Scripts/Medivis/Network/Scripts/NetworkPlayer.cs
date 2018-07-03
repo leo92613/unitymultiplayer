@@ -33,7 +33,8 @@ namespace Medivis.Network
 
         [SyncVar]
         public bool locationSynced;
-
+        [SyncVar]
+        public Vector3 SyncPos;
         public GameObject spherePrefab;
 
         private byte[] savedBytes;
@@ -91,6 +92,21 @@ namespace Medivis.Network
         {
            NetworkSession.instance.PlayAgain();
         }
+        [Command]
+        public void CmdSyncPos(Vector3 pos)
+        {
+            if (isLocalPlayer)
+            {
+                return;
+            }
+            SyncPos = pos;
+
+        }
+
+        public voic OnSyncPosChanged()
+        {
+            transform.localPosition = SyncPos;
+        }
 
         public override void OnClientEnterLobby()
         {
@@ -141,11 +157,12 @@ namespace Medivis.Network
             //{
             //    rollResultField.text = "";
             //}
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (isLocalPlayer)
             {
-                Debug.Log(deviceName + " is a local player? " + isLocalPlayer);
+                CmdSyncPos(transform.localPosition);
             }
         }
+
 
         [ClientRpc]
         public void RpcSetSphereColor(GameObject sphere, float r, float g, float b)
@@ -163,76 +180,5 @@ namespace Medivis.Network
             //totalPointsField.gameObject.SetActive(true);
         }
 
-        //void OnGUI()
-        //{
-        //    if (isLocalPlayer)
-        //    {
-        //        GUILayout.BeginArea(new Rect(0, Screen.height * 0.8f, Screen.width, 100));
-        //        GUILayout.BeginHorizontal();
-        //        GUILayout.FlexibleSpace();
-
-        //        ExampleGameSession gameSession = ExampleGameSession.instance;
-        //        if (gameSession)
-        //        {
-        //            if (gameSession.gameState == GameState.Lobby ||
-        //                gameSession.gameState == GameState.Countdown)
-        //            {
-        //                if (GUILayout.Button(IsReady() ? "Not ready" : "Ready", GUILayout.Width(Screen.width * 0.3f), GUILayout.Height(100)))
-        //                {
-        //                    if (IsReady())
-        //                    {
-        //                        SendNotReadyToBeginMessage();
-        //                    }
-        //                    else
-        //                    {
-        //                        SendReadyToBeginMessage();
-        //                    }
-        //                }
-        //            }
-        //            else if (gameSession.gameState == GameState.WaitForLocationSync)
-        //            {
-        //                if (isServer && !locationSent)
-        //                {
-        //                    gameSession.CmdSendWorldMap();
-        //                    locationSent = true;
-        //                }
-
-        //            }
-        //            else if (gameSession.gameState == GameState.WaitingForRolls)
-        //            {
-        //                //					if (rollResult == 0)
-        //                //					{
-        //                //						if (GUILayout.Button("Roll Die", GUILayout.Width(Screen.width * 0.3f), GUILayout.Height(100)))
-        //                //						{
-        //                //							CmdRollDie();
-        //                //						}
-        //                //					}
-
-        //                {
-        //                    if (GUILayout.Button("Make Sphere", GUILayout.Width(Screen.width * 0.6f), GUILayout.Height(100)))
-        //                    {
-        //                        Transform camTransform = _exampleARSessionManager.CameraTransform();
-        //                        Vector3 spherePosition = camTransform.position + (camTransform.forward.normalized * 0.02f); //place sphere 2cm in front of device
-        //                        CmdMakeSphere(spherePosition, camTransform.rotation);
-        //                    }
-        //                }
-        //            }
-        //            else if (gameSession.gameState == GameState.GameOver)
-        //            {
-        //                if (isServer)
-        //                {
-        //                    if (GUILayout.Button("Play Again", GUILayout.Width(Screen.width * 0.3f), GUILayout.Height(100)))
-        //                    {
-        //                        CmdPlayAgain();
-        //                    }
-        //                }
-        //            }
-        //        }
-
-        //        GUILayout.FlexibleSpace();
-        //        GUILayout.EndHorizontal();
-        //        GUILayout.EndArea();
-        //    }
-        //}
     }
 }

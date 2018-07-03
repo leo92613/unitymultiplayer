@@ -119,7 +119,6 @@ namespace Medivis.Network
             var newLobbyPlayer = newLobbyGameObject.GetComponent<BaseNetworkPlayer>();
             newLobbyPlayer.slot = slot;
             lobbySlots[slot] = newLobbyPlayer;
-
             NetworkServer.AddPlayerForConnection(conn, newLobbyGameObject, playerControllerId);
         }
 
